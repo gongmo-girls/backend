@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.gongmo.tourgather.controller.dto.request.FooRequest;
 import com.gongmo.tourgather.controller.dto.response.FooResponse;
-import com.gongmo.tourgather.dto.response.ApplicationResponse;
+import com.gongmo.tourgather.controller.dto.response.ApplicationResponse;
 import com.gongmo.tourgather.service.FooService;
 
 @RequestMapping("/api/foo")

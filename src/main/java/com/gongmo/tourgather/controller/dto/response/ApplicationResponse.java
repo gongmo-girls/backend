@@ -1,4 +1,4 @@
-package com.gongmo.tourgather.dto.response;
+package com.gongmo.tourgather.controller.dto.response;
 
 import lombok.AccessLevel;
 import lombok.Getter;

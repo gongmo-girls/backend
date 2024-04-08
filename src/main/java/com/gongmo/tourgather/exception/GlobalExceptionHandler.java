@@ -9,7 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.gongmo.tourgather.dto.response.ApplicationResponse;
+import com.gongmo.tourgather.controller.dto.response.ApplicationResponse;
 
 import lombok.extern.java.Log;
 

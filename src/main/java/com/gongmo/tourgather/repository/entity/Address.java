@@ -28,4 +28,8 @@ public class Address {
     private String road;
     private String detail;
     private String zipcode;
+
+    public String getFullAddress() {
+        return String.format("%s %s %s %s", sido, sigungu, road, detail);
+    }
 }

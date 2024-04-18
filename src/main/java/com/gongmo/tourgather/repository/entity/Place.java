@@ -1,6 +1,11 @@
 package com.gongmo.tourgather.repository.entity;
 
+import static com.gongmo.tourgather.domain.PlaceErrorCode.NOT_EXIST_PLACE_TRANSLATION;
+
 import java.util.List;
+
+import com.gongmo.tourgather.domain.ImagePlaceType;
+import com.gongmo.tourgather.exception.ApplicationException;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -48,4 +53,18 @@ public class Place {
 
     private double latitude;
     private double longitude;
+
+    public PlaceTranslation getTranslation() {
+        if (placeTranslation == null || placeTranslation.isEmpty()) {
+            throw new ApplicationException(NOT_EXIST_PLACE_TRANSLATION);
+        }
+        return placeTranslation.get(0);
+    }
+
+    public List<String> extractImageTo(ImagePlaceType type) {
+        return images.stream()
+            .filter(image -> image.getImageType().equals(type))
+            .map(ImagePlace::getImage)
+            .toList();
+    }
 }

@@ -3,6 +3,7 @@ package com.gongmo.tourgather.fixture;
 import static com.gongmo.tourgather.fixture.AddressFixture.MAHOGANY_CAFE_ADDRESS_KOR;
 import static com.gongmo.tourgather.fixture.PlaceTranslationFixture.MAHOGANY_CAFE_TRANSLATION_KOR;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import com.gongmo.tourgather.repository.entity.Address;
@@ -12,8 +13,10 @@ import com.gongmo.tourgather.repository.entity.PlaceHashTag;
 import com.gongmo.tourgather.repository.entity.PlaceTranslation;
 import com.gongmo.tourgather.repository.entity.SingerPlace;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+@Getter
 @RequiredArgsConstructor
 public enum PlaceFixture {
 
@@ -46,6 +49,18 @@ public enum PlaceFixture {
     public Place toDomainWithId(Long id) {
         return createBuilder()
             .id(id)
+            .build();
+    }
+
+    public Place toDomainWithoutAddress() {
+        return createBuilder()
+            .address(new HashSet<>())
+            .build();
+    }
+
+    public Place toDomainWithoutTranslation() {
+        return createBuilder()
+            .placeTranslation(new HashSet<>())
             .build();
     }
 

@@ -1,5 +1,6 @@
 package com.gongmo.tourgather.repository.entity;
 
+import static com.gongmo.tourgather.domain.PlaceErrorCode.NOT_EXIST_PLACE_ADDRESS;
 import static com.gongmo.tourgather.domain.PlaceErrorCode.NOT_EXIST_PLACE_TRANSLATION;
 
 import java.util.List;
@@ -15,7 +16,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -34,9 +34,9 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
-    private Address address;
+    private Set<Address> address;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "place_id")
@@ -59,6 +59,12 @@ public class Place {
 
     private double latitude;
     private double longitude;
+
+    public Address getAddress() {
+        return address.stream()
+            .findFirst()
+            .orElseThrow(() -> new ApplicationException(NOT_EXIST_PLACE_ADDRESS));
+    }
 
     public PlaceTranslation getTranslation() {
         return placeTranslation.stream()

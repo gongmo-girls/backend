@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 public enum PlaceFixture {
 
     MAHOGANY_CAFE_PLACE_KOR(
-        MAHOGANY_CAFE_ADDRESS_KOR.toDomain(),
+        Set.of(MAHOGANY_CAFE_ADDRESS_KOR.toDomain()),
         Set.of(MAHOGANY_CAFE_TRANSLATION_KOR.toDomain()),
         Set.of(),
         Set.of(),
@@ -28,7 +28,7 @@ public enum PlaceFixture {
         37.568654, 126.9800339),
     ;
 
-    private final Address address;
+    private final Set<Address> address;
     private final Set<PlaceTranslation> placeTranslation;
     private final Set<PlaceHashTag> hashTags;
     private final Set<SingerPlace> singers;

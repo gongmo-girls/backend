@@ -24,9 +24,9 @@ public class PlaceService {
     private final LanguageRepository languageRepository;
 
     @Transactional(readOnly = true)
-    public PlaceResponse findById(Long placeId, String lang) {
+    public PlaceResponse findById(Long id, String lang) {
         Language language = findLanguage(lang);
-        Place savedPlace = findPlaceById(placeId, language);
+        Place savedPlace = findPlaceById(id, language);
         return PlaceResponse.from(savedPlace, savedPlace.getTranslation());
     }
 
@@ -35,8 +35,8 @@ public class PlaceService {
             .orElseThrow(() -> new ApplicationException(INVALID_LANGUAGE));
     }
 
-    private Place findPlaceById(Long placeId, Language language) {
-        return placeRepository.findByIdWithLang(placeId, language)
+    private Place findPlaceById(Long id, Language language) {
+        return placeRepository.findByIdAndLang(id, language)
             .orElseThrow(() -> new ApplicationException(NOT_EXIST_PLACE));
     }
 }

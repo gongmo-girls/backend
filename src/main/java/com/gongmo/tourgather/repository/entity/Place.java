@@ -3,10 +3,12 @@ package com.gongmo.tourgather.repository.entity;
 import static com.gongmo.tourgather.domain.PlaceErrorCode.NOT_EXIST_PLACE_TRANSLATION;
 
 import java.util.List;
+import java.util.Set;
 
 import com.gongmo.tourgather.domain.ImagePlaceType;
 import com.gongmo.tourgather.exception.ApplicationException;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -16,10 +18,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Builder
 @Entity
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Place {
@@ -28,25 +34,25 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "place_id")
-    private List<PlaceTranslation> placeTranslation;
+    private Set<PlaceTranslation> placeTranslation;
 
     @OneToMany
     @JoinColumn(name = "place_id")
-    private List<PlaceHashTag> hashTags;
+    private Set<PlaceHashTag> hashTags;
 
     @OneToMany
     @JoinColumn(name = "place_id")
-    private List<SingerPlace> singers;
+    private Set<SingerPlace> singers;
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "place_id")
-    private List<ImagePlace> images;
+    private Set<ImagePlace> images;
 
     private String link;
     private String idolLink;
@@ -55,10 +61,9 @@ public class Place {
     private double longitude;
 
     public PlaceTranslation getTranslation() {
-        if (placeTranslation == null || placeTranslation.isEmpty()) {
-            throw new ApplicationException(NOT_EXIST_PLACE_TRANSLATION);
-        }
-        return placeTranslation.get(0);
+        return placeTranslation.stream()
+            .findFirst()
+            .orElseThrow(() -> new ApplicationException(NOT_EXIST_PLACE_TRANSLATION));
     }
 
     public List<String> extractImageTo(ImagePlaceType type) {

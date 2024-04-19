@@ -17,4 +17,8 @@ public class Language {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String code;
+
+    public Language(String code) {
+        this.code = code;
+    }
 }

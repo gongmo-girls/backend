@@ -39,6 +39,17 @@ public enum PlaceFixture {
     private final double longitude;
 
     public Place toDomain() {
+        return createBuilder()
+            .build();
+    }
+
+    public Place toDomainWithId(Long id) {
+        return createBuilder()
+            .id(id)
+            .build();
+    }
+
+    private Place.PlaceBuilder createBuilder() {
         return Place.builder()
             .address(address)
             .placeTranslation(placeTranslation)
@@ -48,7 +59,6 @@ public enum PlaceFixture {
             .link(link)
             .idolLink(idolLink)
             .latitude(latitude)
-            .longitude(longitude)
-            .build();
+            .longitude(longitude);
     }
 }

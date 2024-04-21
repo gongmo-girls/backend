@@ -10,7 +10,7 @@ import com.gongmo.tourgather.controller.dto.response.FooResponse;
 import com.gongmo.tourgather.controller.dto.response.ApplicationResponse;
 import com.gongmo.tourgather.service.FooService;
 
-@RequestMapping("/api/foo")
+@RequestMapping("/api/v1/foo")
 @RestController
 @RequiredArgsConstructor
 public class FooController {
